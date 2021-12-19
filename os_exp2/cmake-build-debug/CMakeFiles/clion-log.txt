@@ -1,0 +1,39 @@
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /tmp/tmp.LT1ECUB1lR
+-- The C compiler identification is unknown
+-- The CXX compiler identification is GNU 7.5.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc - broken
+CMake Error at /opt/cmake-3.17.2-Linux-x86_64/share/cmake-3.17/Modules/CMakeTestCCompiler.cmake:60 (message):
+  The C compiler
+
+    "/usr/bin/cc"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: /tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp
+    
+    Run Build Command(s):/usr/bin/make cmTC_0865a/fast && /usr/bin/make  -f CMakeFiles/cmTC_0865a.dir/build.make CMakeFiles/cmTC_0865a.dir/build
+    make[1]: 杩涘叆鐩綍鈥�/tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp鈥�
+    Building C object CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o
+    /usr/bin/cc    -o CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o   -c /tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+    cc: error trying to exec 'cc1': execvp: 娌℃湁閭ｄ釜鏂囦欢鎴栫洰褰�
+    CMakeFiles/cmTC_0865a.dir/build.make:85: recipe for target 'CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o' failed
+    make[1]: *** [CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o] Error 1
+    make[1]: 绂诲紑鐩綍鈥�/tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp鈥�
+    Makefile:141: recipe for target 'cmTC_0865a/fast' failed
+    make: *** [cmTC_0865a/fast] Error 2
+    
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:2 (project)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeError.log".

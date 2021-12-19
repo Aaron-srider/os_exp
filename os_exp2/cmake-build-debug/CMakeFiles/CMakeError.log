@@ -1,0 +1,135 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+cc: warning: ‘-mcpu=’ is deprecated; use ‘-mtune=’ or ‘-march=’ instead
+cc: error: unrecognized command line option ‘--target=arm-arm-none-eabi’
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+cc: warning: ‘-mcpu=’ is deprecated; use ‘-mtune=’ or ‘-march=’ instead
+cc: error: unrecognized command line option ‘--target=arm-arm-none-eabi’
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+c++: fatal error: -fuse-linker-plugin, but liblto_plugin.so not found
+compilation terminated.
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_0865a/fast && /usr/bin/make  -f CMakeFiles/cmTC_0865a.dir/build.make CMakeFiles/cmTC_0865a.dir/build
+make[1]: 进入目录“/tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp”
+Building C object CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o   -c /tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+cc: error trying to exec 'cc1': execvp: 没有那个文件或目录
+CMakeFiles/cmTC_0865a.dir/build.make:85: recipe for target 'CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_0865a.dir/testCCompiler.c.o] Error 1
+make[1]: 离开目录“/tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/CMakeTmp”
+Makefile:141: recipe for target 'cmTC_0865a/fast' failed
+make: *** [cmTC_0865a/fast] Error 2
+
+
+

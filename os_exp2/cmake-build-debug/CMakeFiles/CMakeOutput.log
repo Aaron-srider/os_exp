@@ -1,0 +1,14 @@
+The system is: Linux - 5.4.0-90-generic - x86_64
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+
+The CXX compiler identification is GNU, found in "/tmp/tmp.LT1ECUB1lR/cmake-build-debug/CMakeFiles/3.17.2/CompilerIdCXX/CMakeCXXCompilerId.o"
+

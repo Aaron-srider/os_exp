@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="49.232.155.160 (dfbfeea8-fe57-40e3-b6a2-6f494429c5fb)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="local dev ubuntu 20 (070164dc-9fa5-4d1e-ac0e-bc0611ed4a9d)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.hXnVHPqJSp" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="local dev ubuntut 20">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/wc/Projects/os_exp1" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
