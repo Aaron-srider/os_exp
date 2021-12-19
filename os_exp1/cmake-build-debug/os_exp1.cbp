@@ -85,6 +85,12 @@
 		<Unit filename="/tmp/tmp.hXnVHPqJSp/main.cpp">
 			<Option target="os_exp1"/>
 		</Unit>
+		<Unit filename="/tmp/tmp.hXnVHPqJSp/mysemop.cpp">
+			<Option target="os_exp1"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.hXnVHPqJSp/mysemop.h">
+			<Option target="os_exp1"/>
+		</Unit>
 		<Unit filename="/tmp/tmp.hXnVHPqJSp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

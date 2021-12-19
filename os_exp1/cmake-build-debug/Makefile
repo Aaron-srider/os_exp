@@ -170,6 +170,33 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_exp1.dir/build.make CMakeFiles/os_exp1.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+mysemop.o: mysemop.cpp.o
+
+.PHONY : mysemop.o
+
+# target to build an object file
+mysemop.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_exp1.dir/build.make CMakeFiles/os_exp1.dir/mysemop.cpp.o
+.PHONY : mysemop.cpp.o
+
+mysemop.i: mysemop.cpp.i
+
+.PHONY : mysemop.i
+
+# target to preprocess a source file
+mysemop.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_exp1.dir/build.make CMakeFiles/os_exp1.dir/mysemop.cpp.i
+.PHONY : mysemop.cpp.i
+
+mysemop.s: mysemop.cpp.s
+
+.PHONY : mysemop.s
+
+# target to generate assembly for a file
+mysemop.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/os_exp1.dir/build.make CMakeFiles/os_exp1.dir/mysemop.cpp.s
+.PHONY : mysemop.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -182,6 +209,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... mysemop.o"
+	@echo "... mysemop.i"
+	@echo "... mysemop.s"
 .PHONY : help
 
 

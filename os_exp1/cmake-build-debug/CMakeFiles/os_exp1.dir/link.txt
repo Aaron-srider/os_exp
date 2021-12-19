@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/os_exp1.dir/main.cpp.o  -o os_exp1 
+/usr/bin/c++  -g   CMakeFiles/os_exp1.dir/main.cpp.o CMakeFiles/os_exp1.dir/mysemop.cpp.o  -o os_exp1 

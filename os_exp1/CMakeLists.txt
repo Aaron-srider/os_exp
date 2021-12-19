@@ -3,4 +3,4 @@ project(os_exp1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(os_exp1 main.cpp)
+add_executable(os_exp1 main.cpp mysemop.cpp mysemop.h)
