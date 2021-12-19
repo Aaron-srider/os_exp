@@ -1,227 +1,217 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstring>
+#include <sstream>
 #include "mysemop.h"
 
-int chops[5];
+#define STICKFLAG 10
 
-int chop_lock[5];
+#define STICKNUM 5
 
-int if_chops_token[5];
+#define PERSONNUM 5
 
+int chops[STICKNUM];
+
+//拿起筷子是临界区，包含：报告情况、拿起筷子
+int chop_take_locks[STICKNUM];
+
+//记录筷子拿起的根数
+int chop_take_record[STICKNUM];
+
+int less_than_4_mutex;
+
+//报告是临界资源
+int report_mutex;
 
 using std::cout;
 using std::endl;
 
-void report() {
+std::string generate_report() {
     std::string report = " [";
-    for(int i = 0; i < 4;i++) {
-        if(semctl(if_chops_token[i], 0, GETVAL, 0) <= 0) {
-            report+= "竞争, ";
-        } else if(semctl(if_chops_token[i], 0, GETVAL, 0) == 1) {
-            report+= "占用, ";
+    for (int i = 0; i < STICKNUM; i++) {
+        int rest = semctl(chop_take_record[i], 0, GETVAL, 0);
+        int token_num = STICKFLAG - rest;
+        std::stringstream ss;
+        if (i < STICKNUM - 1) {
+            ss << token_num << ", ";
         } else {
-            report+= "可用, ";
+            ss << token_num << "]";
         }
+        report += ss.str();
     }
 
-    if(semctl(if_chops_token[4], 0, GETVAL, 0) <=0) {
-        report+= "竞争]";
-    } else if(semctl(if_chops_token[4], 0, GETVAL, 0) == 1) {
-        report+= "占用]";
+    return report;
+}
+
+
+void take_stick(int for_stick_index) {
+    Psem(chops[for_stick_index]);
+}
+
+void put_stick(int for_stick_index) {
+    Vsem(chops[for_stick_index]);
+}
+
+void record_stick_token(int chop_index) {
+    Psem(chop_take_record[chop_index]);
+}
+
+void record_stick_put(int chop_index) {
+    Vsem(chop_take_record[chop_index]);
+}
+
+void report(int for_p_index, const char *report_str, int chop_index) {
+    std::string report = generate_report();
+    printf("进程:%d --> %s(%d) %s\n", for_p_index, report_str, chop_index, report.c_str());
+}
+
+void lock_stick(int for_chop_index) {
+    Psem(chop_take_locks[for_chop_index]);
+}
+
+void unlock_stick(int for_chop_index) {
+    Vsem(chop_take_locks[for_chop_index]);
+}
+
+void report_before(const char *op, int for_p_index, const char *report_str, int chop_index) {
+    Psem(report_mutex);
+    if (strcmp(op, "take") == 0) {
+        record_stick_token(chop_index);
     } else {
-        report+= "可用]";
+        record_stick_put(chop_index);
     }
-
-    printf("进程:%d --> %s(%d) %s\n",for_p_index, op, chop_index, report.c_str());
-}
-
-
-void process_doing(const char *what, int for_p_index) {
-    cout << "进程:" << for_p_index << " --> " << what << "）" << endl;
-}
-
-
-void process_take_left(int for_p_index) {
-    int chop_index = for_p_index;
-    cout << "进程:" << for_p_index << " --> " << "拿起左边筷子（" << chop_index << "）" << endl;
-    if_chops_token[chop_index]++;
-    Psem(chops[chop_index]);
-}
-
-void process_take_right(int for_p_index) {
-    int chop_index = (for_p_index + 1) % 5;
-    cout << "进程:" << for_p_index << " --> " << "拿起右边筷子（" << chop_index << "）" << endl;
-    if_chops_token[chop_index]++;
-    Psem(chops[chop_index]);
+    report(for_p_index, report_str, chop_index);
+    Vsem(report_mutex);
 }
 
 void process_take(const char *direction, int for_p_index) {
-    int chop_index;
+    int chop_index_2be_token;
 
-    const char* op = nullptr;
+    const char *report_str = nullptr;
 
     if (strcmp(direction, "right") == 0) {
-        chop_index = (for_p_index + 1) % 5;
-        op = "拿起右边筷子";
+        chop_index_2be_token = (for_p_index + 1) % STICKNUM;
+        report_str = "⬆右边筷子";
     } else {
-        chop_index = for_p_index;
-        op = "拿起左边筷子";
+        chop_index_2be_token = for_p_index;
+        report_str = "⬆左边筷子";
     }
 
+    lock_stick(chop_index_2be_token);
 
-    Psem(chops[chop_index]);
+    report_before("take", for_p_index, report_str, chop_index_2be_token);
+    take_stick(chop_index_2be_token);
 
-    Psem(chop_lock[chop_index]);
-
-    //cout << "进程:" << for_p_index << " --> " << op << "（" << chop_index << "）" << endl;
-
-    Psem(if_chops_token[chop_index]);
-
-
-
-    std::string report = " [";
-    for(int i = 0; i < 4;i++) {
-        if(semctl(if_chops_token[i], 0, GETVAL, 0) <= 0) {
-            report+= "竞争, ";
-        } else if(semctl(if_chops_token[i], 0, GETVAL, 0) == 1) {
-            report+= "占用, ";
-        } else {
-            report+= "可用, ";
-        }
-    }
-
-    if(semctl(if_chops_token[4], 0, GETVAL, 0) <=0) {
-        report+= "竞争]";
-    } else if(semctl(if_chops_token[4], 0, GETVAL, 0) == 1) {
-        report+= "占用]";
-    } else {
-        report+= "可用]";
-    }
-
-    //cout << "进程:" << for_p_index << " --> " << op << "（" << chop_index << "）" << report  << endl;
-    printf("进程:%d --> %s(%d) %s\n",for_p_index, op, chop_index, report.c_str());
-
-    Vsem(chop_lock[chop_index]);
+    unlock_stick(chop_index_2be_token);
 }
+
 
 void process_put(const char *direction, int for_p_index) {
-    int chop_index;
+    int chop_index_2be_token;
 
-    const char* op = nullptr;
+    const char *report_str = nullptr;
 
     if (strcmp(direction, "right") == 0) {
-        chop_index = (for_p_index + 1) % 5;
-        op = "放下右边筷子";
+        chop_index_2be_token = (for_p_index + 1) % STICKNUM;
+        report_str = "⬇右边筷子";
     } else {
-        chop_index = for_p_index;
-        op = "放下左边筷子";
+        chop_index_2be_token = for_p_index;
+        report_str = "⬇左边筷子";
     }
 
-    Psem(chop_lock[chop_index]);
+    //lock_stick(chop_index_2be_token);
 
+    report_before("put", for_p_index, report_str, chop_index_2be_token);
 
-    //cout << "进程:" << for_p_index << " --> " << op << "（" << chop_index << "）" << endl;
+    put_stick(chop_index_2be_token);
 
-    Vsem(chops[chop_index]);
-
-
-    Vsem(if_chops_token[chop_index]);
-
-    report();
-
-    //cout << "进程:" << for_p_index << " --> " << op << "（" << chop_index << "）" << report  << endl;
-
-
-
-    Vsem(chop_lock[chop_index]);
+    //unlock_stick(chop_index_2be_token);
 }
-//
-//void process_put_left(int for_p_index) {
-//    cout << "进程:" << for_p_index << " --> " << "放下左边筷子（" << for_p_index << "）" << endl;
-//    if_chops_token[for_p_index]--;
-//    Vsem(chops[for_p_index]);
-//}
-//
-//void process_put_right(int for_p_index) {
-//    int chop_index = (for_p_index + 1) % 5;
-//    cout << "进程:" << for_p_index << " --> " << "放下右边筷子（" << chop_index << "）" << endl;
-//    if_chops_token[chop_index]--;
-//    Vsem(chops[chop_index]);
-//}
 
+int p_index = 0;
 
-int main() {
-    //std::cout << "Hello, World!" << std::endl;
-
-    for (int i = 0; i < 5; i++) {
+void init_mutex() {
+    less_than_4_mutex = CreateSem(4);
+    report_mutex = CreateSem(1);
+    for (int i = 0; i < STICKNUM; i++) {
         chops[i] = CreateSem(1);
-        chop_lock[i] = CreateSem(1);
-        if_chops_token[i] = CreateSem(2);
+        chop_take_locks[i] = CreateSem(1);
+        chop_take_record[i] = CreateSem(STICKFLAG);
     }
+}
 
-    int p_index = 0;
+bool is_child(int flag){
+    return flag == 0;
+}
 
+void span_process() {
     int count = 0;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < PERSONNUM - 1; i++) {
         int re = fork();
         count++;
-        if (re == 0) {
+        if (is_child(re)) {
             p_index = count;
             break;
         }
-
     }
-    //
-    ////cout << getpid() << endl;
-    //cout << p_index << endl;
+}
 
+void init() {
+    init_mutex();
+    span_process();
+}
 
-
-//while(1){}
-
-
-    //while (1) {
-    //
-    //    cout << "进程:" << p_index << " --> " << "think" << endl;
-    //
-    //    if(p_index % 2 == 0) {
-    //        process_take("left", p_index);
-    //        process_take("right", p_index);
-    //    } else {
-    //        process_take("right", p_index);
-    //        process_take("left", p_index);
-    //    }
-    //
-    //
-    //
-    //    //process_take_left(p_index);
-    //    //process_take_right(p_index);
-    //
-    //    cout << "进程:" << p_index << " --> " << "eat" << endl;
-    //
-    //    process_put("left", p_index);
-    //    process_put("right", p_index);
-    //}
-
-
+void normal() {
     while (1) {
-
         cout << "进程:" << p_index << " --> " << "think" << endl;
 
         process_take("left", p_index);
         process_take("right", p_index);
-        //process_take_left(p_index);
-        //process_take_right(p_index);
 
         cout << "进程:" << p_index << " --> " << "eat" << endl;
 
         process_put("left", p_index);
         process_put("right", p_index);
     }
+}
 
-    while (1);
+void odd_even_number() {
+    while (1) {
+        cout << "进程:" << p_index << " --> " << "think" << endl;
 
+        if (p_index % 2 == 0) {
+            process_take("right", p_index);
+            process_take("left", p_index);
+        } else {
+            process_take("left", p_index);
+            process_take("right", p_index);
+        }
 
-    return 0;
+        cout << "进程:" << p_index << " --> " << "eat" << endl;
+
+        process_put("left", p_index);
+        process_put("right", p_index);
+    }
+}
+
+void less_than_4() {
+    while (1) {
+
+        cout << "进程:" << p_index << " --> " << "think" << endl;
+
+        Psem(less_than_4_mutex);
+        process_take("left", p_index);
+        process_take("right", p_index);
+
+        cout << "进程:" << p_index << " --> " << "eat" << endl;
+
+        process_put("left", p_index);
+        process_put("right", p_index);
+        Vsem(less_than_4_mutex);
+    }
+}
+
+int main() {
+    init();
+    less_than_4();
 }
